@@ -48,3 +48,12 @@ mkdir -p Day_002 && touch Day_002/README.md
 
 
 Track 4: High-Scale Systems Design – Cache-Aside ArchitectureThe Flow: Application $\rightarrow$ Check Redis (Hit/Miss) $\rightarrow$ Fallback to SQL Database $\rightarrow$ Populate Redis.  Task: Write a quick 5-line pseudocode block in your Day_002/README.md that maps out this if/else logic for fetching a user profile.
+
+
+user = redis.get(user_id)  # 1. Check Redis
+if not user:               # 2. If it's a Cache Miss
+    user = db.query(user_id)  # 3. Fallback to SQL Database
+    redis.set(user_id, user)  # 4. Populate Redis for next time
+return user                # 5. Return the profile (from Cache or DB)
+
+
